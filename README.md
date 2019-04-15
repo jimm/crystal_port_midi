@@ -33,6 +33,8 @@ LibPortMIDI::initialize
 See the `examples` directory for a few sample applications that use
 `port_midi`.
 
+To build the examples, run `shards build`.
+
 ## Development
 
 TODO: Write development instructions here

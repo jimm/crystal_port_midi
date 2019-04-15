@@ -14,5 +14,7 @@ targets:
     main: examples/note_send.cr
   list_devices:
     main: examples/list_devices.cr
+  sysex_send_and_receive:
+    main: examples/sysex_send_and_receive.cr
 
 license: MIT
