@@ -1,0 +1,18 @@
+name: port_midi
+version: 0.1.0
+
+authors:
+  - Jim Menard <jim@jimmenard.com>
+
+crystal: 0.27.2
+
+libraries:
+  libportmidi: "*"
+
+targets:
+  note_send:
+    main: examples/note_send.cr
+  list_devices:
+    main: examples/list_devices.cr
+
+license: MIT
