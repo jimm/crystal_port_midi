@@ -1,3 +1,4 @@
 language: crystal
 before_install:
-  - sudo apt-get install -y portmidi
+  - sudo apt-get install -y libportmidi-dev
+
