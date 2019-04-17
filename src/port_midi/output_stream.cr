@@ -6,9 +6,7 @@ class OutputStream < PMStream
                 time_proc : (Void* -> LibPortMIDI::PmTimestamp)? = nil,
                 time_info : (Void* -> LibPortMIDI::PmTimestamp)? = nil,
                 latency : Int32 = 0) : OutputStream
-    output = uninitialized LibPortMIDI::Stream
-    err = LibPortMIDI.open_output(pointerof(output),
-                                  output_device_num, output_driver_info,
+    err = LibPortMIDI.open_output(out output, output_device_num, output_driver_info,
                                   buffer_size, time_proc, time_info, latency)
     if err != LibPortMIDI::PmError::NoError
       PortMIDI.raise_error(err, "error opening output device #{output_device_num}")
