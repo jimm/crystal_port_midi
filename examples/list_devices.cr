@@ -1,5 +1,5 @@
 require "../src/port_midi"
 
-LibPortMIDI.initialize
+PortMIDI.init
 PortMIDI.list_all_devices
-LibPortMIDI.terminate
+PortMIDI.terminate
