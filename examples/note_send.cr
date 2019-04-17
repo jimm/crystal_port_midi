@@ -8,10 +8,12 @@ output_device_num = (gets() || "").to_i
 
 output = OutputStream.open(output_device_num)
 
-# send a note on, sleep for one second, then send a note off
-output.write_short(PortMIDI.message(0x90, 64, 127), 0)
-sleep(1)
-output.write_short(PortMIDI.message(0x80, 64, 0), 0)
+# Play a scale.
+[64, 66, 68, 69, 71, 73, 75, 76].each do |note|
+  output.write_short(PortMIDI.message(0x90, note, 127))
+  sleep(0.25)
+  output.write_short(PortMIDI.message(0x80, note, 0))
+end
 
 output.close()
 PortMIDI.terminate
