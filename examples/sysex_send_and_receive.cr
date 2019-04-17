@@ -15,13 +15,13 @@ OBJ_TYPE_SET_LIST_SLOT_NAME = 0x11_u8
 # called `InputStream#set_filter` to filter out all other messages. Without
 # that filter, we'd have to ignore all other incoming MIDI and terminate the
 # sysex if any non-realtime status message was received.
-def read_sysex(input_stream) : Array(UInt8)
+def read_sysex(synth) : Array(UInt8)
   buffer = uninitialized LibPortMIDI::Event[1024]
   sysex = UInt8[]
 
   while true
-    input_stream.wait_for_data
-    len = input_stream.read(buffer.to_unsafe, 1024)
+    synth.wait_for_data
+    len = synth.read(buffer.to_unsafe, 1024)
     if len < 0
       err = LibPortMIDI::PmError.new(len)
       PortMIDI.raise_error(err, "MIDI read error #{err}, ignoring message")
@@ -81,14 +81,12 @@ input_device_num = (gets() || "").to_i
 print "output device number: "
 output_device_num = (gets() || "").to_i
 
-# This convenience function opens both an input and an output and checks for
-# errors.
 synth = SimpleMIDIDevice.open(input_device_num, output_device_num)
 
 # Filter out all incoming MIDI messages except sysex. This isn't normally
 # necessary, but it makes our sysex-receiving code above much simpler.
 filter = LibPortMIDI::Filter::All.value - LibPortMIDI::Filter::Sysex.value
-synth.input.set_filter(filter.to_u32)
+synth.set_filter(filter.to_u32)
 
 # Send a sysex message and receive a response. These particular sysex
 # messages are for the Korg Kronos and won't work for anything else.
@@ -101,10 +99,10 @@ sysex = [SYSEX, KORG_MANUFACTURER_ID, 0x30_u8,
          FUNC_CODE_CURR_OBJ_DUMP_REQ,
          OBJ_TYPE_SET_LIST_SLOT_NAME,
          EOX]
-err = synth.output.write_sysex(sysex)
+err = synth.write_sysex(sysex)
 
 # Read the incoming sysex response. See the definition of `read_sysex` above.
-sysex = read_sysex(synth.input)
+sysex = read_sysex(synth)
 
 # Convert the encoded string in the response into a String and print it.
 puts midi_to_string(sysex[7, sysex.size - 8])

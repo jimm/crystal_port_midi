@@ -6,6 +6,9 @@ require "./output_stream"
 class SimpleMIDIDevice
 
   getter :input, :output
+  delegate :read, :has_data?, :wait_for_data, :set_filter, :set_channel_mask,
+           to: @input
+  delegate :write, :write_short, :write_sysex, :abort_write, to: @output
 
   # Opens streams on *input_device_num* and *output_device_num* and returns
   # a `SimpleMIDIDevice` initialized with the opened streams.
@@ -22,40 +25,5 @@ class SimpleMIDIDevice
   def close
     @input.close
     @output.close
-  end
-
-  # See `InputStream#read`.
-  def read(buffer : Array(Event)) : Int32
-    @input.read(buffer, buffer.size)
-  end
-
-  # See `InputStream#read`.
-  def read(buffer : Pointer(Event), length : Int32) : Int32
-    @input.read(buffer, length)
-  end
-
-  # See `InputStream#has_data?`.
-  def has_data? : Bool
-    @input.has_data?
-  end
-
-  # See `OutpuStream.write`.
-  def write(buffer : Pointer(Event), length : Int32)
-    @output.write(buffer, length)
-  end
-
-  # See `OutpuStream.write`.
-  def write(buffer : Array(Event))
-    @output.write(buffer)
-  end
-
-  # See `OutpuStream.write_short`.
-  def write_short(msg : UInt32, when_tstamp : Int32 = 0)
-    @output.write_short(when_tstamp, msg)
-  end
-
-  # See `OutpuStream.write_sysex`.
-  def write_sysex(msg : UInt8*, when_tstamp : Int32 = 0)
-    @output.write_sysex(when_tstamp, msg)
   end
 end
