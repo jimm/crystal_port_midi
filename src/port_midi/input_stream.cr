@@ -1,6 +1,9 @@
 require "./pm_stream"
 
+# An input MIDI stream.
 class InputStream < PMStream
+  # Opens and returns a new `InputStream`. This convenience method provides
+  # default for most of its arguments.
   def self.open(input_device_num : Int32, input_driver_info : Int32*? = nil,
                 buffer_size : Int32 = 1024,
                 time_proc : (Void* -> LibPortMIDI::PmTimestamp)? = nil,
@@ -18,12 +21,16 @@ class InputStream < PMStream
     LibPortMIDI.poll(@stream) != LibPortMIDI::PmError::NoData
   end
 
+  # Polls for data, waiting *sleep_secs* between polls. *sleep_secs* may be
+  # sub-second.
   def wait_for_data(sleep_secs = 0.001)
     while !has_data?
       sleep(sleep_secs)
     end
   end
 
+  # Reads up to *length* `LibPortMIDI::Event` structs into *buffer*. Raises
+  # an exception on error.
   def read(buffer : Pointer(LibPortMIDI::Event), length : Int32) : Int32
     len = LibPortMIDI.midi_read(@stream, buffer, length)
     if len < 0
@@ -33,10 +40,14 @@ class InputStream < PMStream
     len
   end
 
+  # Reads `LibPortMIDI::Event` structs into *buffer*, up to the length of
+  # the buffer. Raises an exception on error.
   def read(buffer : Array(LibPortMIDI::Event)) : Int32
     read(buffer.as(LibPortMIDI::Event*), buffer.size)
   end
 
+  # Sets the filter bitmask for this input stream. Raises an exception on
+  # error.
   def set_filter(filters_bitmask : UInt32)
     err = LibPortMIDI.set_filter(@stream, filters_bitmask)
     if err != LibPortMIDI::PmError::NoError
@@ -44,6 +55,8 @@ class InputStream < PMStream
     end
   end
 
+  # Sets the channel maks for this input stream. Raises an exception on
+  # error.
   def set_channel_mask(bitmask : UInt32)
     err = LibPortMIDI.set_channel_mask(@stream, bitmask)
     if err != LibPortMIDI::PmError::NoError

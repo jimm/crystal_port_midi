@@ -20,15 +20,12 @@ Finally, a `SimpleMIDIDevice` wraps one input stream and one output stream.
 1. Install the PortMidi library. If you are on MacOS and you use Homebrew,
    you can run `brew install portmidi`. Otherwise, download the PortMidi
    source from http://portmedia.sourceforge.net/portmidi/ and compile it.
-
 2. Add the dependency to your `shard.yml`:
-
-   ```yaml
-   dependencies:
-     port_midi:
-       github: jimm/crystal_port_midi
-   ```
-
+```yaml
+dependencies:
+  port_midi:
+    github: jimm/crystal_port_midi
+```
 3. Run `shards install`
 
 ## Usage
