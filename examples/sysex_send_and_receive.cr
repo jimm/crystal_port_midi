@@ -24,7 +24,7 @@ def read_sysex(input_stream) : Array(UInt8)
     len = input_stream.read(buffer.to_unsafe, 1024)
     if len < 0
       err = LibPortMIDI::PmError.new(len)
-      throw PortMIDI.exception_from_error(err, "MIDI read error #{err}, ignoring message")
+      PortMIDI.raise_error(err, "MIDI read error #{err}, ignoring message")
     end
     len.times do |i|
       bytes = PortMIDI.bytes(buffer[i])

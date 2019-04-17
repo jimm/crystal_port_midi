@@ -11,7 +11,7 @@ class OutputStream < PMStream
                                   output_device_num, output_driver_info,
                                   buffer_size, time_proc, time_info, latency)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error opening output device #{output_device_num}")
+      PortMIDI.raise_error(err, "error opening output device #{output_device_num}")
     end
     new(output)
   end
@@ -19,7 +19,7 @@ class OutputStream < PMStream
   def write(buffer : Event*, length : Int32)
     err = LibPortMIDI.midi_write(@stream, buffer, length)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error writing to stream #{@stream}")
+      PortMIDI.raise_error(err, "error writing to output stream #{@stream}")
     end
   end
 
@@ -30,14 +30,14 @@ class OutputStream < PMStream
   def write_short(msg : UInt32, when_tstamp : Int32 = 0)
     err = LibPortMIDI.midi_write_short(@stream, when_tstamp, msg)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error writing a message to stream #{@stream}")
+      PortMIDI.raise_error(err, "error writing a message to output stream #{@stream}")
     end
   end
 
   def write_sysex(msg : UInt8*, when_tstamp : Int32 = 0)
     err = LibPortMIDI.midi_write_sysex(@stream, when_tstamp, msg)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error writing sysex to #{@stream}")
+      PortMIDI.raise_error(err, "error writing sysex to output stream #{@stream}")
     end
   end
 
@@ -48,7 +48,7 @@ class OutputStream < PMStream
   def abort_write
     err = LibPortMIDI.abort_write(@stream)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error aborting write to stream #{@stream}")
+      PortMIDI.raise_error(err, "error aborting write to output stream #{@stream}")
     end
   end
 end

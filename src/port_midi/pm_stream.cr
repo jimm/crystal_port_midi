@@ -9,7 +9,7 @@ class PMStream
   def close
     err = LibPortMIDI.close_stream(@stream)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error closing stream #{@stream}")
+      PortMIDI.raise_error(err, "error closing stream #{@stream}")
     end
   end
 
@@ -20,7 +20,7 @@ class PMStream
   def synchronize
     err = LibPortMIDI.synchronize(@stream)
     if err != LibPortMIDI::PmError::NoError
-      raise exception_from_error(err, "error synchronizing stream #{@stream}")
+      exception_raise(err, "error synchronizing stream #{@stream}")
     end
   end
 end

@@ -1,5 +1,4 @@
 require "./spec_helper"
-require "../src/output_stream"
 
 describe OutputStream do
   it "throws an error given a bad output device id" do

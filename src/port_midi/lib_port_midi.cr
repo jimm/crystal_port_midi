@@ -1,9 +1,7 @@
 @[Link("portmidi")]
 
-# These are the bindings to the PortMidi library. See the portmidi.h header
-# file for the documenation of the PortMidi C library.
-#
-# See also class PortMIDI below.
+# These are the C bindings to the PortMidi library. See PortMidi's
+# portmidi.h header file for the documenation of the PortMidi C library.
 lib LibPortMIDI
   @[Flags]
   enum Filter

@@ -10,7 +10,7 @@ class InputStream < PMStream
                                  input_device_num, input_driver_info,
                                  buffer_size, time_proc, time_info)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error opening input device #{input_device_num}")
+      PortMIDI.raise_error(err, "error opening input device #{input_device_num}")
     end
     new(input)
   end
@@ -30,7 +30,7 @@ class InputStream < PMStream
     len = LibPortMIDI.midi_read(@stream, buffer, length)
     if len < 0
       err = LibPortMIDI::PmError.new(len)
-      raise PortMIDI.exception_from_error(err, "error synchronizing stream #{@stream}")
+      PortMIDI.raise_error(err, "error reading input stream #{@stream}")
     end
     len
   end
@@ -42,14 +42,14 @@ class InputStream < PMStream
   def set_filter(filters_bitmask : UInt32)
     err = LibPortMIDI.set_filter(@stream, filters_bitmask)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exception_from_error(err, "error setting filter for stream #{@stream}")
+      PortMIDI.raise_error(err, "error setting filter for input stream #{@stream}")
     end
   end
 
   def set_channel_mask(bitmask : UInt32)
     err = LibPortMIDI.set_channel_mask(@stream, bitmask)
     if err != LibPortMIDI::PmError::NoError
-      raise PortMIDI.exceptionxo_from_error(err, "error setting channel mask for stream #{@stream}")
+      raise PortMIDI.raise_error(err, "error setting channel mask for input stream #{@stream}")
     end
   end
 end
