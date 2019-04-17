@@ -1,5 +1,4 @@
 require "../src/port_midi"
-require "../src/output_stream"
 
 PortMIDI.init
 PortMIDI.list_all_devices
