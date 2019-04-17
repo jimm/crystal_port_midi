@@ -127,27 +127,6 @@ module PortMIDI
       puts "  #{index}: #{String.new(dev.name)}#{dev.opened == 1 ? " (open)" : ""}"
     end
   end
-
-  # This convenience function opens the PortMIDI streams for
-  # *input_device_num* and *output_device_num* and returns them as a tuple.
-  # Along the way, it checks for errors and prints error messages. If
-  # *exit_on_error* is `true` (the default), calls `exit(1)` instead of
-  # returning.
-  def self.open_portmidi_streams(input_device_num, output_device_num)
-    err_happened = false
-    input = uninitialized LibPortMIDI::Stream
-    output = uninitialized LibPortMIDI::Stream
-    err = LibPortMIDI.open_input(pointerof(input), input_device_num, nil, 1024, nil, nil)
-    if err != LibPortMIDI::PmError::NoError
-      raise exception_from_error(err, "error opening input device #{input_device_num}")
-    end
-    err = LibPortMIDI.open_output(pointerof(output), output_device_num, nil, 1024, nil, nil, 0)
-    if err != LibPortMIDI::PmError::NoError
-      raise exception_from_error(err, "error opening output device #{output_device_num}")
-    end
-
-    {input, output}
-  end
 end
 
 require "./input_stream"

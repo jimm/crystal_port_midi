@@ -3,16 +3,25 @@
 `port_midi` is a wrapper around the cross-platform
 [PortMidi](http://portmedia.sourceforge.net/portmidi/) MIDI I/O library.
 
-The wrapper around PortMidi is in the lib `LibPortMIDI`.
+The low-level wrapper around PortMidi is in the lib `LibPortMIDI`.
 
 The module `PortMIDI` contains a few helper functions that are useful when
 converting between MIDI data and PortMidi messages. It also contains the
 function `PortMIDI#list_all_devices` which prints out all of the input and
 output devices available to PortMidi.
 
+At a higher level of abstraction, `InputStream` and `OutputStream` represent
+the two kinds of streams that do reading and writing of MIDI data.
+
+Finally, a `SimpleMIDIDevice` wraps one input stream and one output stream.
+
 ## Installation
 
-1. Add the dependency to your `shard.yml`:
+1. Install the PortMidi library. If you are on MacOS and you use Homebrew,
+   you can run `brew install portmidi`. Otherwise, download the PortMidi
+   source from http://portmedia.sourceforge.net/portmidi/ and compile it.
+
+2. Add the dependency to your `shard.yml`:
 
    ```yaml
    dependencies:
@@ -20,24 +29,27 @@ output devices available to PortMidi.
        github: jimm/crystal_port_midi
    ```
 
-2. Run `shards install`
+3. Run `shards install`
 
 ## Usage
 
 ```crystal
 require "port_midi"
 
-LibPortMIDI::initialize
+PortMIDI.initialize
 ```
 
 See the `examples` directory for a few sample applications that use
-`port_midi`.
+`port_midi` and the `InputStream`, `OutputStream`, and `SimpleMIDIDevice`
+classes.
 
 To build the examples, run `shards build`.
 
 ## Development
 
-TODO: Write development instructions here
+To run the tests, run `crystal spec`.
+
+To generate the docs, run `crystal docs`.
 
 ## Contributing
 
