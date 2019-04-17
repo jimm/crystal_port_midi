@@ -1,6 +1,9 @@
 require "./lib_port_midi"
+require "./device_info"
 
-# A wrapper around the LibPortMIDI C bindings.
+# A wrapper around the non-stream-specific LibPortMIDI C bindings, plus some
+# convenience functions for packing and unpacking PortMidi messages and to
+# output midi device information.
 module PortMIDI
   VERSION = "0.1.0"
 
@@ -51,25 +54,31 @@ module PortMIDI
     LibPortMIDI.terminate()
   end
 
-  # Returns the error message that corresponds to `errnum`.
-  def self.get_error_text(errnum : PmError) : String
+  # Returns the error message that corresponds to `errnum`. Note that
+  # calling this method clears the error flag used by the code underlying
+  # `PmStream#host_error?`.
+  def self.get_error_text(errnum : LibPortMIDI::PmError) : String
       String.new(LibPortMIDI.get_error_text(errnum))
   end
 
+  # Returns the number of attached MIDI input and output devices.
   def self.count_devices() : Int32
     LibPortMIDI.count_devices()
   end
 
+  # Returns the default input device ID, as defined by PortMidi.
   def self.get_default_input_device_id() : Int32
     LibPortMIDI.get_default_input_device_id()
   end
 
+  # Returns the default output device ID, as defined by PortMidi.
   def self.get_default_output_device_id() : Int32
     LibPortMIDI.get_default_output_device_id()
   end
 
+  # Returns a `DeviceInfo` for device *device_id*.
   def self.get_device_info(device_id : Int32) : DeviceInfo
-      LibPortMIDI.get_device_info(device_id).value
+    DeviceInfo.new(LibPortMIDI.get_device_info(device_id).value)
   end
 
   # Creates a PortMidi message from three MIDI bytes.
