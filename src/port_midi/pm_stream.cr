@@ -18,7 +18,7 @@ class PMStream
   # Returns `true` if the stream has a pending host error.
   #
   # The PortMidi docs note that normally you won't have to call this method.
-  def host_error?() : Bool
+  def host_error? : Bool
     LibPortMIDI.host_error?(@stream) != 0
   end
 

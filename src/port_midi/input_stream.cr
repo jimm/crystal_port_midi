@@ -9,7 +9,7 @@ class InputStream < PMStream
                 time_proc : (Void* -> LibPortMIDI::PmTimestamp)? = nil,
                 time_info : (Void* -> LibPortMIDI::PmTimestamp)? = nil) : InputStream
     err = LibPortMIDI.open_input(out input, input_device_num, input_driver_info,
-                                 buffer_size, time_proc, time_info)
+      buffer_size, time_proc, time_info)
     if err != LibPortMIDI::PmError::NoError
       PortMIDI.raise_error(err, "error opening input device #{input_device_num}")
     end

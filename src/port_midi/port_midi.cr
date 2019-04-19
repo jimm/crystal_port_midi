@@ -8,72 +8,80 @@ module PortMIDI
   VERSION = "0.1.0"
 
   class HostError < Exception; end
+
   class InvalidDeviceId < Exception; end
+
   class InsufficientMemory < Exception; end
+
   class BufferTooSmall < Exception; end
+
   class BufferOverflow < Exception; end
+
   class BadPtr < Exception; end
+
   class BadData < Exception; end
+
   class InternalError < Exception; end
+
   class BufferMaxSize < Exception; end
 
   # Given *err*, creates and raises an instance of the corresponding
   # `Exception` subclass with the given *msg*.
   def self.raise_error(err : LibPortMIDI::PmError, msg : String)
     raise case err
-          when LibPortMIDI::PmError::HostError
-            HostError.new(msg)
-          when LibPortMIDI::PmError::InvalidDeviceId
-            InvalidDeviceId.new(msg)
-          when LibPortMIDI::PmError::InsufficientMemory
-            InsufficientMemory.new(msg)
-          when LibPortMIDI::PmError::BufferTooSmall
-            BufferTooSmall.new(msg)
-          when LibPortMIDI::PmError::BufferOverflow
-            BufferOverflow.new(msg)
-          when LibPortMIDI::PmError::BadPtr
-            BadPtr.new(msg)
-          when LibPortMIDI::PmError::BadData
-            BadData.new(msg)
-          when LibPortMIDI::PmError::InternalError
-            InternalError.new(msg)
-          when LibPortMIDI::PmError::BufferMaxSize
-            BufferMaxSize.new(msg)
-          else
-            Exception.new(msg)
-          end
+    when LibPortMIDI::PmError::HostError
+      HostError.new(msg)
+    when LibPortMIDI::PmError::InvalidDeviceId
+      InvalidDeviceId.new(msg)
+    when LibPortMIDI::PmError::InsufficientMemory
+      InsufficientMemory.new(msg)
+    when LibPortMIDI::PmError::BufferTooSmall
+      BufferTooSmall.new(msg)
+    when LibPortMIDI::PmError::BufferOverflow
+      BufferOverflow.new(msg)
+    when LibPortMIDI::PmError::BadPtr
+      BadPtr.new(msg)
+    when LibPortMIDI::PmError::BadData
+      BadData.new(msg)
+    when LibPortMIDI::PmError::InternalError
+      InternalError.new(msg)
+    when LibPortMIDI::PmError::BufferMaxSize
+      BufferMaxSize.new(msg)
+    else
+      Exception.new(msg)
+    end
   end
 
   # Initializes the PortMidi system.
   def self.init
-    LibPortMIDI.initialize()
+    LibPortMIDI.initialize
   end
 
   # Terminates PortMidi.
   def self.terminate
-    LibPortMIDI.terminate()
+    LibPortMIDI.terminate
   end
 
   # Returns the error message that corresponds to `errnum`. Note that
   # calling this method clears the error flag used by the code underlying
   # `PmStream#host_error?`.
   def self.get_error_text(errnum : LibPortMIDI::PmError) : String
-      String.new(LibPortMIDI.get_error_text(errnum))
+    String.new(LibPortMIDI.get_error_text(errnum))
   end
 
   # Returns the number of attached MIDI input and output devices.
-  def self.count_devices() : Int32
-    LibPortMIDI.count_devices()
+  def self.count_devices : Int32
+    LibPortMIDI.count_devices
   end
 
   # Returns the default input device ID, as defined by PortMidi.
-  def self.get_default_input_device_id() : Int32
-    LibPortMIDI.get_default_input_device_id()
+  def self.get_default_input_device_id : Int32
+    LibPortMIDI.get_default_input_device_id
   end
 
   # Returns the default output device ID, as defined by PortMidi.
-  def self.get_default_output_device_id() : Int32
-    LibPortMIDI.get_default_output_device_id()
+  def self.get_default_output_device_id : Int32
+    LibPortMIDI.get_default_output_device_id
   end
 
   # Returns a `DeviceInfo` for device *device_id*.
@@ -84,8 +92,8 @@ module PortMIDI
   # Creates a PortMidi message from three MIDI bytes.
   def self.message(status, data1, data2) : UInt32
     ((((data2.to_u32) << 16) & 0xFF0000_u32) |
-     (((data1.to_u32) << 8) & 0xFF00_u32) |
-     ((status.to_u32) & 0xFF_u32))
+      (((data1.to_u32) << 8) & 0xFF00_u32) |
+      ((status.to_u32) & 0xFF_u32))
   end
 
   # Extracts the status byte from a PortMidi *message*.

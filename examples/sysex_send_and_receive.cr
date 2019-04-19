@@ -1,10 +1,10 @@
 require "../src/port_midi"
 
 # A few helpful constant definitions.
-SYSEX = 0xF0_u8
-EOX = 0xF7_u8
-KORG_MANUFACTURER_ID = 0x42_u8
-KRONOS_DEVICE_ID = 0x68_u8
+SYSEX                       = 0xF0_u8
+EOX                         = 0xF7_u8
+KORG_MANUFACTURER_ID        = 0x42_u8
+KRONOS_DEVICE_ID            = 0x68_u8
 FUNC_CODE_CURR_OBJ_DUMP_REQ = 0x74_u8
 OBJ_TYPE_SET_LIST_SLOT_NAME = 0x11_u8
 
@@ -61,9 +61,9 @@ def midi_to_internal(m_bytes : Array(UInt8))
 
   while m_len > 0
     chunk_len = m_len.clamp(0, 8)
-    (chunk_len-1).times do |i|
+    (chunk_len - 1).times do |i|
       high_bit_set = (m_bytes[m_offset] & (1 << i)) != 0
-      i_bytes << m_bytes[m_offset+i+1] + (high_bit_set ? 0x80_u8 : 0_u8)
+      i_bytes << m_bytes[m_offset + i + 1] + (high_bit_set ? 0x80_u8 : 0_u8)
     end
     m_offset += chunk_len
     m_len -= chunk_len

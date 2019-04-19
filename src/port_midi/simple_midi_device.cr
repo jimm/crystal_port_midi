@@ -4,10 +4,9 @@ require "./output_stream"
 
 # A wrapper around an input/output pair of streams.
 class SimpleMIDIDevice
-
   getter :input, :output
   delegate :read, :has_data?, :wait_for_data, :set_filter, :set_channel_mask,
-           to: @input
+    to: @input
   delegate :write, :write_short, :write_sysex, :abort_write, to: @output
 
   # Opens streams on *input_device_num* and *output_device_num* and returns

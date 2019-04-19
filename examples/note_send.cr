@@ -15,5 +15,5 @@ output = OutputStream.open(output_device_num)
   output.write_short(PortMIDI.message(0x80, note, 0))
 end
 
-output.close()
+output.close
 PortMIDI.terminate

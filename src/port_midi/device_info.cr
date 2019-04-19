@@ -19,13 +19,19 @@ class DeviceInfo
   end
 
   # Returns `true` if this is an input device.
-  def input?; @is_input; end
+  def input?
+    @is_input
+  end
 
   # Returns `true` if this is an output device.
-  def output?; @is_output; end
+  def output?
+    @is_output
+  end
 
   # Returns `true` if this device is opened. As noted in the class comment,
   # this is a snapshot: the value will not change when the device is opened
   # or closed.
-  def opened?; @is_opened; end
+  def opened?
+    @is_opened
+  end
 end

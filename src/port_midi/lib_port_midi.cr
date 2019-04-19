@@ -6,7 +6,7 @@ lib LibPortMIDI
   @[Flags]
   enum Filter
     Sysex
-    MTC                         # MIDI time code
+    MTC # MIDI time code
     SongPosition
     SongSelect
     Unused1
@@ -15,12 +15,12 @@ lib LibPortMIDI
     Unused3
     Clock
     Tick
-    Play = ((1 << 0x0A) | (1 << 0x0C) | (1 << 0x0B))
+    Play              = ((1 << 0x0A) | (1 << 0x0C) | (1 << 0x0B))
     UndefinedRealtime = (1 << 0x0D)
     ActiveSensing
     Reset
-    Note = ((1 << 0x19) | (1 << 0x18))
-    PolyAftertouch = (1 << 0x1A)
+    Note              = ((1 << 0x19) | (1 << 0x18))
+    PolyAftertouch    = (1 << 0x1A)
     ControlChange
     ProgramChange
     ChannelAftertouch
@@ -44,36 +44,36 @@ lib LibPortMIDI
 
   # The error values returned by PortMidi.
   enum PmError : Int32
-    NoError = 0
-    NoData = 0    # A "no error" return that also indicates no data avail.
-    GotData = 1,  # A "no error" return that also indicates data available
-    HostError = -10000
-    InvalidDeviceId,            # out of range or
-                                # output device when input is requested or
-                                # input device when output is requested or
-                                # device is already opened
-    InsufficientMemory,
+    NoError         =      0
+    NoData          =      0   # A "no error" return that also indicates no data avail.
+    GotData         =      1,  # A "no error" return that also indicates data available
+HostError       = -10000
+    InvalidDeviceId,  # out of range or
+    # output device when input is requested or
+    # input device when output is requested or
+    # device is already opened
+InsufficientMemory,
     BufferTooSmall,
     BufferOverflow,
-    BadPtr,                     # PortMidiStream parameter is NULL or
-                                # stream is not opened or
-                                # stream is output when input is required or
-                                # stream is input when output is required
-    BadData,                    # illegal midi data, e.g. missing EOX
-    InternalError,
-    BufferMaxSize               # buffer is already as large as it can be
+    BadPtr,  # PortMidiStream parameter is NULL or
+    # stream is not opened or
+    # stream is output when input is required or
+    # stream is input when output is required
+BadData,  # illegal midi data, e.g. missing EOX
+InternalError,
+    BufferMaxSize # buffer is already as large as it can be
   end
 
   type PmTimestamp = UInt32
 
   # The device information returned by PortMidi.
   struct DeviceInfo
-    struct_version : Int32      # internal
-    interf : UInt8 *            # underlying MIDI API
-    name : UInt8 *              # device name
-    input : Int32               # true iff input is available
-    output : Int32              # true iff output is available
-    opened : Int32              # used by generic MidiPort code
+    struct_version : Int32 # internal
+    interf : UInt8*        # underlying MIDI API
+    name : UInt8*          # device name
+    input : Int32          # true iff input is available
+    output : Int32         # true iff output is available
+    opened : Int32         # used by generic MidiPort code
   end
 
   # A single MIDI event sent/received by PortMidi.
@@ -84,19 +84,19 @@ lib LibPortMIDI
 
   type Stream = Pointer(Void)
 
-  fun initialize = Pm_Initialize() : PmError
+  fun initialize = Pm_Initialize : PmError
 
-  fun terminate = Pm_Terminate() : PmError
+  fun terminate = Pm_Terminate : PmError
 
   fun host_error? = Pm_HasHostError(stream : Stream) : Int32
 
   fun get_error_text = Pm_GetErrorText(errnum : PmError) : UInt8*
 
-  fun count_devices = Pm_CountDevices() : Int32
+  fun count_devices = Pm_CountDevices : Int32
 
-  fun get_default_input_device_id = Pm_GetDefaultInputDeviceID() : Int32
+  fun get_default_input_device_id = Pm_GetDefaultInputDeviceID : Int32
 
-  fun get_default_output_device_id = Pm_GetDefaultOutputDeviceID() : Int32
+  fun get_default_output_device_id = Pm_GetDefaultOutputDeviceID : Int32
 
   fun get_device_info = Pm_GetDeviceInfo(device_id : Int32) : DeviceInfo*
 
