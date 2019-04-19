@@ -29,7 +29,7 @@ class OutputStream < PMStream
   # Writes all of the `LibPortMIDI::Event` structs in *buffer*. Raises an
   # exception on error.
   def write(buffer : Array(LibPortMIDI::Event))
-    write(buffer, buffer.size)
+    write(buffer.to_unsafe, buffer.size)
   end
 
   # Writes a single *msg* at time *when_tstamp* (now by default). Raises an
@@ -53,7 +53,7 @@ class OutputStream < PMStream
   # Writes a sysex *msg* at time *when_tstamp* (now by default). Raises an
   # exception on error.
   def write_sysex(msg : Array(UInt8), when_tstamp : Int32 = 0)
-    write_sysex(msg.as(UInt8*), when_tstamp)
+    write_sysex(msg.to_unsafe, when_tstamp)
   end
 
   # Terminates outgoing messages immediately. This stream should be closed

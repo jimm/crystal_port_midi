@@ -43,7 +43,7 @@ class InputStream < PMStream
   # Reads `LibPortMIDI::Event` structs into *buffer*, up to the length of
   # the buffer. Raises an exception on error.
   def read(buffer : Array(LibPortMIDI::Event)) : Int32
-    read(buffer.as(LibPortMIDI::Event*), buffer.size)
+    read(buffer.to_unsafe, buffer.size)
   end
 
   # Sets the filter bitmask for this input stream. Raises an exception on
