@@ -41,6 +41,14 @@ class OutputStream < PMStream
     end
   end
 
+  # Writes a single MIDI message consisting of *status*, *data1* (default
+  # value 0), and *data2* (default 0) at time *when_tstamp* (default now).
+  # Raises an exception on error.
+  def write_short(status : UInt8, data1 : UInt8 = 0_u8, data2 : UInt8 = 0_u8,
+                  when_tstamp : Int32 = 0)
+    write_short(PortMIDI.message(status, data1, data2), when_tstamp)
+  end
+
   # Writes a sysex *msg* at time *when_tstamp* (now by default). Raises an
   # exception on error.
   def write_sysex(msg : UInt8*, when_tstamp : Int32 = 0)
