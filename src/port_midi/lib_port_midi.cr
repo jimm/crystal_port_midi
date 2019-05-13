@@ -47,20 +47,20 @@ lib LibPortMIDI
     NoError         =      0
     NoData          =      0   # A "no error" return that also indicates no data avail.
     GotData         =      1,  # A "no error" return that also indicates data available
-HostError       = -10000
+    HostError       = -10000
     InvalidDeviceId,  # out of range or
     # output device when input is requested or
     # input device when output is requested or
     # device is already opened
-InsufficientMemory,
+    InsufficientMemory,
     BufferTooSmall,
     BufferOverflow,
     BadPtr,  # PortMidiStream parameter is NULL or
     # stream is not opened or
     # stream is output when input is required or
     # stream is input when output is required
-BadData,  # illegal midi data, e.g. missing EOX
-InternalError,
+    BadData,  # illegal midi data, e.g. missing EOX
+    InternalError,
     BufferMaxSize # buffer is already as large as it can be
   end
 
