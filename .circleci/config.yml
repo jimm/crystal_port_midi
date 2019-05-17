@@ -9,6 +9,7 @@ jobs:
 
       - run:
           name: Install PortMidi
+          command: apt-get update
           command: apt-get install -y libportmidi-dev
 
       - run:
