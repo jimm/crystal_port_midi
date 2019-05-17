@@ -8,8 +8,11 @@ jobs:
       - checkout
 
       - run:
-          name: Install PortMidi
+          name: apt-get update
           command: apt-get update
+
+      - run:
+          name: Install PortMidi
           command: apt-get install -y libportmidi-dev
 
       - run:
