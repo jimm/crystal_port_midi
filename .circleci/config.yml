@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: crystallang/crystal
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install PortMidi
+          command: apt-get install -y libportmidi-dev
+
+      - run:
+          name: Install shards
+          command: shards install
+
+      - run:
+          name: Spec
+          command: crystal spec
