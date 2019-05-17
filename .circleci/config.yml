@@ -21,4 +21,4 @@ jobs:
 
       - run:
           name: Spec
-          command: crystal spec
+          command: crystal spec spec/port_midi_spec.cr
