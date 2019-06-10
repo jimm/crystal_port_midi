@@ -42,16 +42,17 @@ classes.
 
 To build the examples, run `shards build`.
 
-## Development
+## Development and Testing
 
 To run the tests, run `crystal spec`.
 
-When running tests on Travis CI, we limit ourselves to tests that do not
-return PortMidi errors. That is because the installation of libportmidi
-available to Travis through `apt-get` is compiled with the `PM_CHECK_ERRORS`
-flag enabled. When an error such as an invalid device ID happens, the flag
-causes the PortMidi code to display a message, prompt the user to hit ENTER,
-and exit immediately. I can work around the prompt by running `/usr/bin/yes
+When running tests on Travis CI or CircleCI, we limit ourselves to tests
+that do not return PortMidi errors. That is because the installation of
+libportmidi available to Travis through `apt-get` is compiled with the
+`PM_CHECK_ERRORS` flag enabled. When an error such as an invalid device ID
+happens, the flag causes the PortMidi code to display a message, prompt the
+user to hit ENTER, and exit immediately. I can work around the prompt by
+running `/usr/bin/yes
 | crystal spec`, but I can't work around the call to `exit`.
 
 ## Documentation

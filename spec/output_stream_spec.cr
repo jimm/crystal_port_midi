@@ -26,10 +26,4 @@ describe OutputStream do
     ostream.first_event.message.should eq(0xdeadbeef)
     ostream.num_events.should eq(1)
   end
-
-  it "throws an error given a bad output device id" do
-    expect_raises(PortMIDI::InvalidDeviceId, "error opening output device -1") do
-      OutputStream.open(-1)
-    end
-  end
 end

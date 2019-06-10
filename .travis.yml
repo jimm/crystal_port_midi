@@ -1,4 +1,4 @@
 language: crystal
 before_install:
   - sudo apt-get install -y libportmidi-dev
-script: crystal spec spec/port_midi_spec.cr
+script: find spec -name '*_spec.cr' | grep -v error_handling_spec.cr | xargs crystal spec
