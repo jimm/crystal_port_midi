@@ -5,26 +5,24 @@
 lib LibPortMIDI
   @[Flags]
   enum Filter
-    Sysex
-    MTC # MIDI time code
-    SongPosition
-    SongSelect
-    Unused1
-    Unused2
-    TuneRequest
-    Unused3
-    Clock
-    Tick
-    Play              = ((1 << 0x0A) | (1 << 0x0C) | (1 << 0x0B))
-    UndefinedRealtime = (1 << 0x0D)
-    ActiveSensing
-    Reset
-    Note              = ((1 << 0x19) | (1 << 0x18))
+    Sysex             = (1 << 0x00)
+    MTC               = (1 << 0x01) # MIDI time code
+    SongPosition      = (1 << 0x02)
+    SongSelect        = (1 << 0x03)
+    TuneRequest       = (1 << 0x06)
+    Clock             = (1 << 0x08)
+    Tick              = (1 << 0x09)
+    Play              = ((1 << 0x0A) | (1 << 0x0B) | (1 << 0x0C))
+    FD                = (1 << 0x0D)
+    UndefinedRealtime = (1 << 0x0D) # yes, same as FD
+    ActiveSensing     = (1 << 0x0E)
+    Reset             = (1 << 0x0F)
+    Note              = ((1 << 0x18) | (1 << 0x19))
     PolyAftertouch    = (1 << 0x1A)
-    ControlChange
-    ProgramChange
-    ChannelAftertouch
-    PitchBend
+    ControlChange     = (1 << 0x1B)
+    ProgramChange     = (1 << 0x1C)
+    ChannelAftertouch = (1 << 0x1D)
+    PitchBend         = (1 << 0x1E)
 
     # Returns a flag representing all realtime messages.
     def realtime
@@ -44,24 +42,25 @@ lib LibPortMIDI
 
   # The error values returned by PortMidi.
   enum PmError : Int32
-    NoError         =      0
-    NoData          =      0   # A "no error" return that also indicates no data avail.
-    GotData         =      1,  # A "no error" return that also indicates data available
-    HostError       = -10000
-    InvalidDeviceId,  # out of range or
-    # output device when input is requested or
-    # input device when output is requested or
-    # device is already opened
-    InsufficientMemory,
-    BufferTooSmall,
-    BufferOverflow,
-    BadPtr,  # PortMidiStream parameter is NULL or
-    # stream is not opened or
-    # stream is output when input is required or
-    # stream is input when output is required
-    BadData,  # illegal midi data, e.g. missing EOX
-    InternalError,
-    BufferMaxSize # buffer is already as large as it can be
+    NoError   =      0
+    NoData    =      0 # A "no error" return that also indicates no data avail.
+    GotData   =      1 # A "no error" return that also indicates data available
+    HostError = -10000
+    # InvalidDeviceId: out of range or output device when input is requested
+    # or input device when output is requested or device is already opened
+    InvalidDeviceId    = -9999
+    InsufficientMemory = -9998
+    BufferTooSmall     = -9997
+    BufferOverflow     = -9996
+    # BadPtr: PortMidiStream parameter is NULL or stream is not opened or
+    # stream is output when input is required or stream is input when output
+    # is required
+    BadPtr = -9995
+    # BadData: illegal MIDI data, e.g. missing EOX
+    BadData       = -9994
+    InternalError = -9993
+    # BufferMaxSize: buffer is already as large as it can be
+    BufferMaxSize = -9992
   end
 
   type PmTimestamp = UInt32
