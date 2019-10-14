@@ -1,9 +1,9 @@
 require "./spec_helper"
 
-MESSAGE = 0x00ff8090_u32
+MESSAGE = 0x007f4290_u32
 STATUS  =        0x90_u8
-DATA1   =        0x80_u8
-DATA2   =        0xff_u8
+DATA1   =        0x42_u8
+DATA2   =        0x7f_u8
 BYTES   = StaticArray[STATUS, DATA1, DATA2, 0_u8]
 
 describe PortMIDI do
