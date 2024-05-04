@@ -33,7 +33,7 @@ dependencies:
 ```crystal
 require "port_midi"
 
-PortMIDI.initialize
+PortMIDI.init
 ```
 
 See the `examples` directory for a few sample applications that use
