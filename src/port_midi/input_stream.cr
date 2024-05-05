@@ -4,10 +4,11 @@ require "./pm_stream"
 class InputStream < PMStream
   # Opens and returns a new `InputStream`. This convenience method provides
   # default for most of its arguments.
-  def self.open(input_device_num : Int32, input_driver_info : Int32*? = nil,
+  def self.open(input_device_num : Int32,
+                input_driver_info : Void*? = nil,
                 buffer_size : Int32 = 1024,
                 time_proc : (Void* -> LibPortMIDI::PmTimestamp)? = nil,
-                time_info : (Void* -> LibPortMIDI::PmTimestamp)? = nil) : InputStream
+                time_info : Void*? = nil) : InputStream
     err = LibPortMIDI.open_input(out input, input_device_num, input_driver_info,
       buffer_size, time_proc, time_info)
     if err != LibPortMIDI::PmError::NoError

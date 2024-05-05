@@ -99,13 +99,19 @@ lib LibPortMIDI
 
   fun get_device_info = Pm_GetDeviceInfo(device_id : Int32) : DeviceInfo*
 
-  fun open_input = Pm_OpenInput(stream : Stream*, input_device : Int32, input_driver_info : Int32*,
-                                buffer_size : Int32, time_proc : Void* -> PmTimestamp,
-                                time_info : Void* -> PmTimestamp) : PmError
+  fun open_input = Pm_OpenInput(stream : Stream*,
+                                input_device : Int32,
+                                input_driver_info : Void*,
+                                buffer_size : Int32,
+                                time_proc : Void* -> PmTimestamp,
+                                time_info : Void*) : PmError
 
-  fun open_output = Pm_OpenOutput(stream : Stream*, output_device : Int32, output_driver_info : Int32*,
-                                  buffer_size : Int32, time_proc : Void* -> PmTimestamp,
-                                  time_info : Void* -> PmTimestamp,
+  fun open_output = Pm_OpenOutput(stream : Stream*,
+                                  output_device : Int32,
+                                  output_driver_info : Void*,
+                                  buffer_size : Int32,
+                                  time_proc : Void* -> PmTimestamp,
+                                  time_info : Void*,
                                   latency : Int32) : PmError
 
   fun set_filter = Pm_SetFilter(stream : Stream, filters_bitmask : UInt32) : PmError

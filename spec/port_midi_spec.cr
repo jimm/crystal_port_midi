@@ -35,6 +35,6 @@ describe PortMIDI do
   it "can turn error enums into error messages" do
     PortMIDI
       .get_error_text(LibPortMIDI::PmError::InvalidDeviceId)
-      .should eq("PortMidi: `Invalid device ID'")
+      .should eq("PortMidi: Invalid device ID")
   end
 end
